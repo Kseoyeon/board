@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.blog.dao.BoardDao;
 import com.spring.blog.dto.Board;
@@ -24,10 +25,14 @@ public class BoardServiceImpl implements BoardService {
 	public void insertBoard(Board board) throws Exception {
 		boardDao.insertBoard(board);
 	}
+	
+	@Transactional
 	@Override
 	public Board getBoardContent(int bid) throws Exception {
+		Board board = new Board();
 		boardDao.updateViewCnt(bid);
-		return boardDao.getBoardContent(bid);
+		board = boardDao.getBoardContent(bid);
+		return board;
 	}
 	
 	@Override
