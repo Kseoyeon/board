@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.blog.common.Pagination;
 import com.spring.blog.dao.BoardDao;
 import com.spring.blog.dto.Board;
 
@@ -17,8 +18,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 
 	@Override
-	public List<Board> getBoardList() throws Exception {
-		return boardDao.getBoardList();
+	public List<Board> getBoardList(Pagination pagination) throws Exception {
+		return boardDao.getBoardList(pagination);
 	}
 	
 	@Override
@@ -39,8 +40,14 @@ public class BoardServiceImpl implements BoardService {
 	public void updateBoard(Board board) throws Exception {
 		boardDao.updateBoard(board);
 	}
+	
 	@Override
 	public void deleteBoard(int bid) throws Exception {
 		 boardDao.deleteBoard(bid);
 	}		
+	
+	@Override
+	public int getBoardListCnt() throws Exception {
+		return boardDao.getBoardListCnt();
+	}
 }

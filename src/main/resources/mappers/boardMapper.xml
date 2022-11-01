@@ -6,6 +6,8 @@
 			bid, cate_cd, title, content, tag, view_cnt, reg_id, reg_dt, edit_dt
 		FROM
 			tbl_board
+		ORDER BY bid DESC
+		LIMIT #{startList}, #{listSize}
 	</select>
 	<select id = "getBoardContent" resultType = "com.spring.blog.dto.Board" parameterType = "com.spring.blog.dto.Board">
 		SELECT
@@ -43,4 +45,11 @@
 		WHERE
 			bid = #{bid}
 	</update>
+	
+	<select id = "getBoardListCnt" resultType = "int">
+		SELECT
+			count(*) as listCnt
+		FROM
+			tbl_board
+	</select>
 </mapper>

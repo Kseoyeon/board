@@ -11,10 +11,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.spring.blog.dao.BoardDao;
 import com.spring.blog.dto.Board;
 
+@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring/root-context.xml", "classpath:spring/dataSource-context.xml","classpath:servlet-context.xml" })
 public class BoardDaoTest {
@@ -60,17 +62,21 @@ public class BoardDaoTest {
 	public void testInsertBoard() throws Exception {
 		Board board = new Board();
 		board.setCate_cd("1");
-		board.setTitle("첫번째 게시물 입니다.");
-		board.setContent("첫번째 게시물입니다.");
+		//board.setTitle("첫번째 게시물 입니다.");
+		//board.setContent("첫번째 게시물입니다.");
 		board.setTag("1");
 		board.setReg_id("1");
 		
-		int result = boardDao.insertBoard(board);
-		logger.info("\n Insert Board Result " + result);
-		if(result == 1) {
-			logger.info("\n 게시물 등록 성공");
-		} else {
-			logger.info("\n 게시물 등록 실패");
+		for(int i = 1; i < 500; i++) {
+			board.setTitle(i + " 번째 게시물 입니다.");
+			board.setContent(i + " 번째 게시물 입니다.");
+			int result = boardDao.insertBoard(board);
+			logger.info("\n Insert Board Result " + result);
+			if(result == 1) {
+				logger.info("\n 게시물 등록 성공");
+			} else {
+				logger.info("\n 게시물 등록 실패");
+			}
 		}
 	}
 	
