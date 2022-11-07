@@ -61,21 +61,39 @@
 			<div id="paginationBox">
 				<ul class = "pagination">
 					<c:if test="${pagination.prev}">
-						<li class="page-item"><a class="page-link" href = "#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}')">Previous</a></li>
+						<li class="page-item"><a class="page-link" href = "#" onClick="fn_prev('${pagination.page}', '${pagination.range}', '${pagination.rangeSize}', '${search.searchType}', '${search.keyword}')">Previous</a></li>
 					</c:if>
 					
 					<c:forEach begin="${pagination.startPage}" end = "${pagination.endPage}" var = "idx">
 						<li class="page-item" value="${pagination.page == idx ? 'active' : ''}">
-							<a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}')"> ${idx} </a>
+							<a class="page-link" href="#" onClick="fn_pagination('${idx}', '${pagination.range}', '${pagination.rangeSize}', '${search.searchType}', '${search.keyword}')"> ${idx} </a>
 						</li>
 					</c:forEach>
 					
 					<c:if test="${pagination.next}">
-						<li class="page-item"><a class="page-link" href="#" onClick="fn_nextPage('${pagination.range}','${pagination.range}', '${pagination.rangeSize}')">Next</a></li>
+						<li class="page-item"><a class="page-link" href="#" onClick="fn_nextPage('${pagination.page}','${pagination.range}', '${pagination.rangeSize}', '${search.searchType}', '${search.keyword}')">Next</a></li>
 					</c:if>
 				</ul>
 			</div>
 			<!-- pagination{e} -->
+			
+			<!-- search{s} -->
+			<div class="form-group row justify-content-center">
+				<div class="w100" style="padding-right:10px">
+					<select class="form-control form-control-sm" name="searchType" id="searchType">
+						<option value="title">제목</option>
+						<option value="content">본문</option>
+						<option value="reg_id">작성자</option>
+					</select>
+				</div>
+				<div class="w300" style="padding-right:10px">
+					<input type="text" class="form-control form-control-sm" name="keyword" id="keyword">
+				</div>
+				<div>
+					<button class="btn btn-sm btn-primary" name="btnSearch" id="btnSearch">검색</button>
+				</div>
+			</div>
+			<!-- search{e} -->
 		</div>
 	</article>
 	<script>
@@ -92,14 +110,15 @@
 		}
 		
 		//이전 버튼 이벤트
-		function fn_prev(page, range, rangeSize) {
+		function fn_prev(page, range, rangeSize, searchType, keyword) {
 			var page = ((range - 2) * rangeSize) + 1;
 			var range = range - 1;
 			
 			var url = "${pageContext.request.contextPath}/board/getBoardList";
 			url = url + "?page=" + page;
 			url = url + "&range=" + range;
-			
+			url = url + "&searchType=" + $('#searchType').val();
+			url = url + "&keyword=" + keyword;
 			location.href = url;
 		}
 		
@@ -108,21 +127,32 @@
 			var url = "${pageContext.request.contextPath}/board/getBoardList";
 			url = url + "?page=" + page;
 			url = url + "&range=" + range;
-			
+			url = url + "&searchType=" + $('#searchType').val();
+			url = url + "&keyword=" + keyword;
 			location.href = url;
 		}
 		
 		//다음 버튼 이벤트
-		function fn_nextPage(page, range, rangeSize) {
+		function fn_nextPage(page, range, rangeSize, searchType, keyword) {
 			var page = parseInt((range * rangeSize)) + 1;
 			var range = parseInt(range) + 1;
 			
 			var url = "${pageContext.request.contextPath}/board/getBoardList";
 			url = url + "?page=" + page;
 			url = url + "&range=" + range;
-			
+			url = url + "&searchType=" + $('#searchType').val();
+			url = url + "&keyword=" + keyword;
 			location.href = url;
 		}
+		// 검색 버튼
+		$(document).on('click', '#btnSearch', function(e){
+			e.preventDefault();
+			var url = "${pageContext.request.contextPath}/board/getBoardList";
+			url = url + "?searchType=" + $('#searchType').val();
+			url = url + "&keyword=" + $('#keyword').val();
+			location.href = encodeURI(url);
+			console.log(url);
+		})
 	</script>
 </body>
 </html>

@@ -6,6 +6,17 @@
 			bid, cate_cd, title, content, tag, view_cnt, reg_id, reg_dt, edit_dt
 		FROM
 			tbl_board
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="searchType == 'title' and keyword != null and keyword != '' ">
+				AND TITLE like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'content' and keyword != null and keyword != '' ">
+				AND CONTENT like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'reg_id' and keyword != null and keyword != '' ">
+				AND reg_id like CONCAT('%', #{keyword}, '%')
+			</if>
+		</trim>
 		ORDER BY bid DESC
 		LIMIT #{startList}, #{listSize}
 	</select>
@@ -51,5 +62,19 @@
 			count(*) as listCnt
 		FROM
 			tbl_board
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="keyword != null and keyword != '' ">
+				<if test="searchType == 'title'">
+					AND TITLE like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'content'">
+					AND CONTENT like CONCAT('%', #{keyword}, '%')
+				</if>
+				<if test="searchType == 'reg_id'">
+					AND reg_id like CONCAT('%', #{keyword}, '%')
+				</if>
+			</if>
+			
+		</trim>
 	</select>
 </mapper>

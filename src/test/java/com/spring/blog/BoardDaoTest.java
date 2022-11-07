@@ -25,19 +25,19 @@ public class BoardDaoTest {
 	@Inject
 	private BoardDao boardDao;
 	
-	@Test @Ignore
-	public void testGetBoardList() throws Exception {
-		List<Board> boardList = boardDao.getBoardList();
-		logger.info("\n Board List \n");
-		if(boardList.size() > 0) {
-			for(Board list : boardList) {
-				logger.info(list.title);
-			}
-		} else {
-			logger.info("데이터가 없습니다.");
-		}
-		
-	}
+//	@Test @Ignore
+//	public void testGetBoardList() throws Exception {
+//		List<Board> boardList = boardDao.getBoardList();
+//		logger.info("\n Board List \n");
+//		if(boardList.size() > 0) {
+//			for(Board list : boardList) {
+//				logger.info(list.title);
+//			}
+//		} else {
+//			logger.info("데이터가 없습니다.");
+//		}
+//		
+//	}
 	
 	@Test @Ignore
 	public void testGetBoardContent() throws Exception {
