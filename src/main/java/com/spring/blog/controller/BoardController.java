@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.blog.common.Search;
 import com.spring.blog.dto.Board;
+import com.spring.blog.dto.Reply;
 import com.spring.blog.service.BoardService;
 
 @Controller
@@ -67,6 +68,7 @@ public class BoardController {
 	@RequestMapping(value="/getBoardContent", method = RequestMethod.GET)
 	public String getBoardContent(Model model, @RequestParam("bid") int bid) throws Exception {
 		model.addAttribute("boardContent", boardService.getBoardContent(bid));
+		model.addAttribute("reply", new Reply());
 		return "board/boardContent";
 	}
 	

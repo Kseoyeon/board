@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.blog.common.Search;
 import com.spring.blog.dto.Board;
+import com.spring.blog.dto.Reply;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -50,4 +51,25 @@ public class BoardDaoImpl implements BoardDao {
 	public int getBoardListCnt(Search search) throws Exception {
 		return sqlSession.selectOne("com.spring.blog.boardMapper.getBoardListCnt", search);
 	}
+	
+	@Override
+	public List<Reply> getReplyList(int bid) throws Exception {
+		return sqlSession.selectList("com.spring.blog.replyMapper.getReplyList", bid);
+	}
+	
+	@Override
+	public int saveReply(Reply reply) throws Exception {
+		return sqlSession.insert("com.spring.blog.replyMapper.saveReply", reply);
+	}
+	
+	@Override
+	public int updateReply(Reply reply) throws Exception {
+		return sqlSession.update("com.spring.blog.replyMapper.updateReply", reply);
+	}
+	
+	@Override
+	public int deleteReply(int rid) throws Exception {
+		return sqlSession.delete("com.spring.blog.replyMapper.deleteReply", rid);
+	}
+	
 }

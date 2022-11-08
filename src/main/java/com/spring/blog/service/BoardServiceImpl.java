@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring.blog.common.Search;
 import com.spring.blog.dao.BoardDao;
 import com.spring.blog.dto.Board;
+import com.spring.blog.dto.Reply;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -49,5 +50,25 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int getBoardListCnt(Search search) throws Exception {
 		return boardDao.getBoardListCnt(search);
+	}
+	
+	@Override
+	public List<Reply> getReplyList(int bid) throws Exception {
+		return boardDao.getReplyList(bid);
+	}
+	
+	@Override
+	public int saveReply(Reply reply) throws Exception {
+		return boardDao.saveReply(reply);
+	}
+	
+	@Override
+	public int updateReply(Reply reply) throws Exception {
+		return boardDao.updateReply(reply);
+	}
+	
+	@Override
+	public int deleteReply(int rid) throws Exception {
+		return boardDao.deleteReply(rid);
 	}
 }
