@@ -45,4 +45,25 @@ public class RestBoardController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/updateReply", method = RequestMethod.POST)
+	public Map<String, Object> updateReply(@RequestBody Reply reply) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		try {
+			boardService.updateReply(reply);
+			result.put("status", "OK");
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "False");
+		}
+		
+		return result;
+	}
+	
+	@RequestMapping(value = "/deleteReply", method = RequestMethod.POST)
+	public String deleteReply(@RequestParam("rid") int rid) throws Exception {
+		boardService.deleteReply(rid);
+		return "board/boardContent";
+	}
 }
